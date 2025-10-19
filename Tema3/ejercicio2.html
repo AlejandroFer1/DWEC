@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+    </head>
+
+    <body>
+        <header>
+            <!-- place navbar here -->
+        </header>
+        <main></main>
+        <footer>
+            <!-- place footer here -->
+        </footer>
+        <!-- Bootstrap JavaScript Libraries -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+           // Funciones constructoras
+
+function Oveja(raza, color = "blanco", maxLeche, esquilada = false) {
+    this.raza = raza;
+    this.color = color;
+    this.maxLeche = maxLeche;
+    this.esquilada = esquilada;
+    this.embarazada = false;
+    this.lecheTotal = 0;
+
+    this.balar = function() {
+        console.log("Beeeee");
+    };
+    this.ordeñar = function(cantidad) {
+        if (this.embarazada) return 0;
+        const leche = Math.min(cantidad, this.maxLeche);
+        this.lecheTotal += leche;
+        return leche;
+    };
+    this.setColor = function(nuevoColor) {
+        this.color = nuevoColor;
+    };
+    this.getColor = function() {
+        return this.color;
+    };
+    this.toString = function() {
+        return `Oveja (${this.raza}, color: ${this.color}, esquilada: ${this.esquilada}, leche total: ${this.lecheTotal})`;
+    };
+}
+
+function Conejo(colores, orejas, cariño = Math.random() * 100, roedura = Math.random() * 99 + 1) {
+    this.colores = colores;
+    this.orejas = orejas;
+    this.cariño = cariño;
+    this.roedura = roedura;
+
+    this.indiceAchuchabilidad = function() {
+        return this.cariño / this.roedura;
+    };
+    this.esAchuchable = function() {
+        return this.indiceAchuchabilidad() > 0.5;
+    };
+    this.achuchar = function() {
+        if (this.esAchuchable()) {
+            console.log("¡Cariñitos!");
+        } else {
+            console.log("buffffff");
+        }
+    };
+    this.setCariño = function(valor) {
+        this.cariño = valor;
+    };
+    this.toString = function() {
+        return `Conejo (colores: ${this.colores.join(", ")}, orejas: ${this.orejas}, cariño: ${this.cariño.toFixed(2)}, roedura: ${this.roedura.toFixed(2)}, achuchabilidad: ${this.indiceAchuchabilidad().toFixed(2)})`;
+    };
+}
+
+function Gallina(colorHuevo, diasAdulta = 0) {
+    this.colorHuevo = colorHuevo;
+    this.huevosTotales = 0;
+    this.huevosSemana = 0;
+    this.diasAdulta = diasAdulta;
+    this.ultimoHuevoDia = -1;
+
+    this.ponerHuevo = function(dia) {
+        this.huevosTotales++;
+        if (dia - this.ultimoHuevoDia <= 7) this.huevosSemana++;
+        else this.huevosSemana = 1;
+        this.ultimoHuevoDia = dia;
+        this.cacarear();
+    };
+    this.indicePonibilidad = function() {
+        return this.diasAdulta > 180 ? this.huevosTotales / (this.diasAdulta - 180) : 0;
+    };
+    this.cacarear = function() {
+        console.log("caaaaa caaaca ca caaaaaa");
+    };
+    this.toString = function() {
+        return `Gallina (huevos: ${this.huevosTotales}, color huevo: ${this.colorHuevo}, edad: ${this.diasAdulta} días, ponibilidad: ${this.indicePonibilidad().toFixed(2)})`;
+    };
+}
+
+function Vaca(colores, cuernos, maxLeche, tipoLeche) {
+    this.colores = colores;
+    this.cuernos = cuernos;
+    this.maxLeche = maxLeche;
+    this.tipoLeche = tipoLeche;
+    this.embarazada = false;
+    this.lecheTotal = 0;
+
+    this.mugir = function() {
+        console.log("muuuuuuu-cho cuidado que tengo cuernos");
+    };
+    this.ordeñar = function(cantidad) {
+        if (this.embarazada) return 0;
+        const leche = Math.min(cantidad, this.maxLeche);
+        this.lecheTotal += leche;
+        this.mugir();
+        return leche;
+    };
+    this.toString = function() {
+        return `Vaca (colores: ${this.colores.join(", ")}, cuernos: ${this.cuernos}m, leche total: ${this.lecheTotal}, tipo leche: ${this.tipoLeche})`;
+    };
+}
+
+function Gallo(raza, colores) {
+    this.raza = raza;
+    this.colores = colores;
+    this.ultimoCanto = null;
+
+    this.cantar = function(horaActual, minutosDesdeUltimoCanto) {
+        if ((horaActual >= 4 && horaActual <= 8) || minutosDesdeUltimoCanto >= 5) {
+            this.ultimoCanto = horaActual;
+            console.log("kikirikiiiiii");
+        } else {
+            console.log("poo popopo pooo");
+        }
+    };
+    this.toString = function() {
+        return `Gallo (raza: ${this.raza}, colores: ${this.colores.join(", ")}, última hora canto: ${this.ultimoCanto})`;
+    };
+}
+
+// Manipulación de objetos según el enunciado
+
+// Oveja churra esquilada
+const oveja1 = new Oveja("churra", "blanco", 5, true);
+console.log(oveja1.ordeñar(2));
+console.log(oveja1.ordeñar(2));
+oveja1.embarazada = true;
+console.log(oveja1.ordeñar(2)); // No debe ordeñar
+oveja1.setColor("marrón");
+oveja1.balar();
+
+// Conejo RGB, orejas abajo
+const conejo1 = new Conejo(["azul", "rojo", "verde"], "abajo");
+conejo1.achuchar();
+if (!conejo1.esAchuchable()) {
+    conejo1.setCariño(conejo1.roedura * 0.6); // Asegura achuchabilidad > 0.5
+}
+conejo1.achuchar();
+
+// Gallina 7 meses (210 días), huevos azul fosforito
+const gallina1 = new Gallina("azul fosforito", 210);
+console.log(gallina1.indicePonibilidad()); // Debe ser 0
+gallina1.ponerHuevo(211);
+gallina1.ponerHuevo(212);
+gallina1.ponerHuevo(213);
+console.log(gallina1.indicePonibilidad());
+
+// Vaca negra, cuernos 0.1m, leche desnatada
+const vaca1 = new Vaca(["negro"], 0.1, 8, "desnatada");
+vaca1.ordeñar(4);
+vaca1.ordeñar(4);
+console.log(`Leche total: ${vaca1.lecheTotal}`);
+
+// Gallo azarqueliano
+const gallo1 = new Gallo("azarqueliana", ["rojo", "negro"]);
+gallo1.cantar(5, 0);
+gallo1.cantar(6, 1);
+gallo1.cantar(7, 2);
+
+// Mostrar toString de todos
+console.log(oveja1.toString());
+console.log(conejo1.toString());
+console.log(gallina1.toString());
+console.log(vaca1.toString());
+console.log(gallo1.toString());
+
+// Crear la granja
+function randomColor(tipo) {
+    switch (tipo) {
+        case "oveja": return ["blanco", "negro", "marrón"][Math.floor(Math.random() * 3)];
+        case "conejo": return ["gris", "blanco", "negro", "marrón", "rojo", "azul", "verde"][Math.floor(Math.random() * 7)];
+        case "gallina": return ["blanco", "marrón", "azul", "amarillo"][Math.floor(Math.random() * 4)];
+        case "vaca": return ["blanco", "negro", "marrón"][Math.floor(Math.random() * 3)];
+        default: return "blanco";
+    }
+}
+
+const granja = {
+    cuadras: {
+        ovejas: [],
+        conejos: [],
+        gallinas: [],
+        vacas: []
+    },
+    gallo: gallo1
+};
+
+// Inicializar animales aleatorios
+for (let i = 0; i < Math.floor(Math.random() * 6) + 5; i++) {
+    granja.cuadras.ovejas.push(new Oveja("merina", randomColor("oveja"), Math.floor(Math.random() * 10) + 1, Math.random() > 0.5));
+    granja.cuadras.conejos.push(new Conejo([randomColor("conejo")], Math.random() > 0.5 ? "arriba" : "abajo"));
+    granja.cuadras.gallinas.push(new Gallina(randomColor("gallina"), Math.floor(Math.random() * 500)));
+    granja.cuadras.vacas.push(new Vaca([randomColor("vaca")], (Math.random() * 1).toFixed(2), Math.floor(Math.random() * 15) + 5, ["entera", "desnatada", "semi"][Math.floor(Math.random() * 3)]));
+}
+
+// Imprimir todos los animales
+for (const tipo in granja.cuadras) {
+    console.log(`\nCuadra de ${tipo}:`);
+    granja.cuadras[tipo].forEach(animal => console.log(animal.toString()));
+}
+console.log("\nGallo de la granja:");
+console.log(granja.gallo.toString());
+
+// Selección de animales selectos
+const ovejaSelecta = granja.cuadras.ovejas.reduce((max, o) => o.maxLeche > max.maxLeche ? o : max, granja.cuadras.ovejas[0]);
+const conejoSelecto = granja.cuadras.conejos.reduce((max, c) => c.indiceAchuchabilidad() > max.indiceAchuchabilidad() ? c : max, granja.cuadras.conejos[0]);
+const gallinaSelecta = granja.cuadras.gallinas.reduce((max, g) => g.diasAdulta > max.diasAdulta ? g : max, granja.cuadras.gallinas[0]);
+const vacaSelecta = granja.cuadras.vacas.reduce((max, v) => parseFloat(v.cuernos) > parseFloat(max.cuernos) ? v : max, granja.cuadras.vacas[0]);
+
+const AnimalesSelectos = [ovejaSelecta, conejoSelecto, gallinaSelecta, vacaSelecta];
+
+// Imprimir AnimalesSelectos
+console.log("\nAnimales Selectos:");
+AnimalesSelectos.forEach(a => console.log(a.toString()));
+
+// Serializar en JSON
+console.log("\nAnimales Selectos (JSON):");
+console.log(JSON.stringify(AnimalesSelectos, null, 2));
+        
+        </script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
